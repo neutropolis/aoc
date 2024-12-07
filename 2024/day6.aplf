@@ -1,19 +1,11 @@
  day6
- ⍝ i←↑⊃⎕NGET'/home/neutropolis/Downloads/day6_example.txt'1
- i←↑⊃⎕NGET'/home/neutropolis/Downloads/day6_input.txt'1
+ ⍝i←↑⊃⎕NGET'/home/neutropolis/Downloads/day6_example.txt' 1
+ i←↑⊃⎕NGET'/home/neutropolis/Downloads/day6_input.txt' 1
  c←'^>∨<'
- x←0 (1+⊃⍴i)
- Step←{
-     m←⍵
-     d←m[p←⍸m∊c]
-     n←p+(¯1 0)(0 1)(1 0)(0 ¯1)[rp←c⍳d]
-     x(∊∨.∨⍨∊)↑n:('X'@p)m
-     m[n]='#':((1⌽c)[rp]@p)m
-     m[p]←'X' ⋄ m[n]←d
-     m
- }
- next←i
- :Repeat
-    next←Step next
- :Until ~×+/+/next∊c
- +/+/'X'=next
+ z←1⍴⊂(⊃s),c⍳i[s←⍸i∊c]
+ i[s]←'.'
+ r←day6_1 i z
+ +/+/'X'=⊃r ⍝ Part 1
+ j←0
+ r2←{m←i ⋄ m[⊂⍵[1 2]]←'#' ⋄ j+←1 ⋄ j day6_2 m z}¨¯1↓2⊃r
+ ≢∪2∘↑¨r2/¯1↓2⊃r
