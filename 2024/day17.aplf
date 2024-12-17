@@ -1,0 +1,42 @@
+ (p1 p2)←day17 input
+ i←⊃⎕NGET input 1
+ (r p)←(×∘≢¨⊆⊢)i
+ r←(⍎(≢'Register X: ')∘↓)¨r
+ p←(⍎(≢'Program: ')∘↓)⊃p
+ p←↓(2÷⍨≢p)2⍴p
+ o←⍬
+ ip←0
+ cmb←{⍵∊¯1+⍳4:⍵ ⋄ ⍺⊃⍨1(⍵-3)}
+ rA←{⍵ cmb 4} ⋄ rB←{⍵ cmb 5} ⋄ rC←{⍵ cmb 6}
+ wA←{a←⍺ ⋄ (1 1⊃a)←⍵ ⋄ a} ⋄ wB←{a←⍺ ⋄ (1 2⊃a)←⍵ ⋄ a} ⋄ wC←{a←⍺ ⋄ (1 3⊃a)←⍵ ⋄ a}
+ xor←2∘⊥≠⍥((32⍴2)∘⊤)
+ adv←{⍺ wA⌊(rA ⍺)÷2*⍺ cmb ⍵}
+ bxl←{⍺ wB(rB ⍺)xor ⍵}
+ bst←{⍺ wB 8|⍺ cmb ⍵}
+ jnz←{0=rA ⍺:⍺ ⋄ (r p o _)←⍺ ⋄ r p o(⍵÷2)}
+ bxc←{⍺ wB(rB ⍺)xor rC ⍺}
+ out←{(r p o ip)←⍺ ⋄ r p(o,8|⍺ cmb ⍵)ip}
+ bdv←{⍺ wB⌊(rA ⍺)÷2*⍺ cmb ⍵}
+ cdv←{⍺ wC⌊(rA ⍺)÷2*⍺ cmb ⍵}
+ Run←{
+     (r p o ip)←⍵
+     (ip+1)>≢p:o
+     (in op)←p⊃⍨ip+1
+     w←r p o(ip+1)
+     in=0:∇ w adv op
+     in=1:∇ w bxl op
+     in=2:∇ w bst op
+     in=3:∇ w jnz op
+     in=4:∇ w bxc op
+     in=5:∇ w out op
+     in=6:∇ w bdv op
+     in=7:∇ w cdv op
+ }
+ p1←⊃{(⍕⍺),',',⍕⍵}/Run r p o ip
+
+ nuR←{
+     ~×≢⍵:⌊/⍺÷8
+     a←∊{⊃Run(r p o ip)wA ⍵}¨all←∊{⍵+¯1+⍳8}¨⍺
+     (8×all[⍸a=⊃⍵])∇ 1↓⍵
+ }
+ p2←(,0)nuR⌽∊p
