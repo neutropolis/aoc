@@ -1,0 +1,20 @@
+ (p1 p2)←day20 input
+ i←↑⊃⎕NGET input 1
+ S←⊃⍸i='S' ⋄ nwes←(¯1 0)(0 ¯1)(1 0)(0 1)
+ d←{
+     (i p n)←⍵
+     nxt←ngh/⍨'S.E'∊⍨i[ngh←nwes+⊂p]
+     ~×≢nxt:i
+     ∇((n2@(⊂p2))i)(p2←⊃nxt)(n2←n+1)
+ }(0@(⊂S)⊢i)S 0
+ Run←{
+     a←⍺ ⋄ o←1+2⍴a ⋄ s←1+2×2⍴a ⋄ th←⍵
+     Cheat←{
+         '#'=c←⍵⊃⍨⊂o:'#'
+         p←⍸(~⍵∊' #')^a≥m←{+/|⍵-o}¨⍳s
+         ⊂save/⍨0<save←(-m[p])+c-⍵[p]
+     }
+     ch←⌽x[⍋x←{⍺(≢⍵)}⌸0'#'~⍨∊Cheat⌺s⊢d;]
+     +/⊣/ch[⍸th≤⊢/ch;]
+ }
+ p1←02 Run 100 ⋄ p2←20 Run 100
