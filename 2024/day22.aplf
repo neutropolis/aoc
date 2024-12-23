@@ -1,0 +1,11 @@
+ (p1 p2)←day22 input
+ i←⍎¨⊃⎕NGET input 1
+ mix←2∘⊥≠⍥((32⍴2)∘⊤)
+ prune←16777216∘|
+ s←{prune⍤(⊢mix ⍺⍺)⍵}
+ s1←64∘×s ⋄ s2←(⌊÷∘32)s ⋄ s3←2048∘×s
+ F←s3∘s2∘s1
+ price←10|nums←↑2000{⍺=0:⍬ ⋄ (F ⍵),(⍺-1)∇ F ⍵}¨i
+ p1←+/⊢/nums
+ quad←∪⊃,/↓{⊣⌸4,/⍵}⍤1⊢delta←{2-⍨/⍵}⍤1⊢price
+ p2←⌈/+⌿price{p←4↓⍺ ⋄ d←⍵ ⋄ {⊃p[⍸⍵⍷d]}¨quad}⍤1⊢delta
