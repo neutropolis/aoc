@@ -1,7 +1,7 @@
 # aoc
 [Advent of Code](https://adventofcode.com/) Puzzles
 
-# [2024](2024)
+## [2024](2024)
 
 This year was my first time participating in Advent of Code, and I found the style of the problems completely new. As the days went by, I gradually improved by getting a better sense of the puzzle designer's thinking (if that's even possible!). I chose to implement my solutions in APL, a language I'm currently learning, and it was a pleasure to tackle most challenges that way.
 
