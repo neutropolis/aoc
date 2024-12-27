@@ -1,4 +1,4 @@
- p1←day24 input
+ (p1 p2)←day24 input
  (z g)←(×∘≢¨⊆⊢)⊃⎕NGET input 1
  g←{(¯1↑x),⍨3↑x←' '(≠⊆⊢)⍵}¨g
  u←(⊂∘⍋⌷⊢)∪⊃,/g
@@ -13,3 +13,24 @@
      a=1:∧/xy ⋄ a=2:∨/xy ⋄ a=3:≠/xy
  }
  p1←2⊥⌽('z'=⊃¨w)/{(F∘⍵¨m)@(⊢/¨m)⊢⍵}⍣≡⊢z
+
+ v←(⊃⊢/)¨g ⋄ op←3∘↑¨g
+ ⍝ half binary adder
+ 'z00'=⊃v[⊃⍸(⊂'y00' 'XOR' 'x00')(∊^.^∊⍨)¨op]
+ cin←⊃v[⊃⍸(⊂'y00' 'AND' 'x00')(∊^.^∊⍨)¨op]
+ ⍝ full binary adder
+ e←⍬
+ F←{⊃v[⊃⍸(⊂⍵)(∊^.^∊⍨)¨op]}
+ FBA←{
+     ⍺=45:⍵
+     x←⊃,/'x',pos←⍕¨10 10⊤⍺ ⋄ y←⊃,/'y',pos ⋄ z←⊃,/'z',pos ⋄ cin←⍵
+     a←F x 'AND' y
+     b←F x 'XOR' y
+     c←F b 'AND' cin
+     cout←F c 'OR' a
+     s←F b 'XOR' cin
+     (⍺+1)∇cout
+ }
+ 1 FBA cin ⍝ use debugger to spot INDEX ERRORs
+ r←'z39' 'rpp' 'kdf' 'z23' 'ckj' 'z15' 'dbp' 'fdv'
+ p2←{⍺,',',⍵}/r[⍋r]
